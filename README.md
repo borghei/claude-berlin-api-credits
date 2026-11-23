@@ -75,7 +75,41 @@ Click **Create key** and copy the key straight away. **It's only shown once.**
 
 In the Console, open **Workbench** (also called Playground) and start prompting. Everything you run there is paid from your credits.
 
-### With Claude Code
+### With Claude Code: the easy way (recommended)
+
+Let Claude set it up for you. Your key never goes into the chat. You paste it into a file yourself.
+
+1. Create a folder for your project and start Claude Code in it.
+2. Copy this prompt and paste it into Claude Code:
+
+```text
+I got Anthropic API credits at a workshop. I want Claude Code in this folder
+to use my API key instead of my Claude subscription. Please set it up safely:
+
+1. Create a file called .env in this folder with one line:
+   ANTHROPIC_API_KEY=
+   Leave the value empty. I will paste my key in myself.
+2. Make sure .env is listed in .gitignore (create .gitignore if it doesn't
+   exist), so my key is never committed.
+3. Create or update .claude/settings.local.json in this folder with an
+   "apiKeyHelper" that reads the key from that .env file, using the full
+   path to the file. Keep any settings that are already there.
+4. Never open, print or ask me for my key, and don't read .env after I
+   fill it in.
+5. When you're done, give me short, simple steps: open .env, paste my key
+   right after the = sign, save, quit Claude Code, start it again in this
+   folder, and run /status to check that it now says the API key is in use.
+```
+
+3. Open the new `.env` file, paste your key right after `ANTHROPIC_API_KEY=` (no spaces, no quotes) and save.
+4. Quit Claude Code (`/exit`) and start it again **in the same folder**. If it asks whether to use the API key, say yes.
+5. Run `/status`. You should see the API key in use, not your Claude Pro or Max login.
+
+This only applies to that folder. Everywhere else, Claude Code keeps using your normal subscription.
+
+> On Windows, this works in WSL or Git Bash. If you're on plain Windows and it doesn't work, use the manual way below or find one of the hosts.
+
+### With Claude Code: the manual way
 
 By default Claude Code uses your Claude Pro or Max subscription, and the credits just sit there. To spend the credits instead, set the key in the terminal where you run Claude Code:
 
@@ -104,7 +138,7 @@ unset ANTHROPIC_API_KEY
 | "Code not valid", or nothing happens when you redeem | Redeemed without an organization selected | Select your organization (step 2) and try again |
 | Redeemed fine, but the balance is still $0 | Redeemed into a different organization than the one you're looking at | Check the organization switcher, bottom left in the Console |
 | The link doesn't open yet | Redemption links open on the day of the event | Try again on 4 December |
-| `/status` still shows your Claude Pro or Max login | `ANTHROPIC_API_KEY` isn't set in this terminal | Run `echo $ANTHROPIC_API_KEY`. If it's empty, set it again and restart Claude Code |
+| `/status` still shows your Claude Pro or Max login | The key isn't reaching Claude Code | Easy way: check the key is saved in `.env` right after the `=`, then restart Claude Code in that folder. Manual way: run `echo $ANTHROPIC_API_KEY`; if it's empty, set it again and restart Claude Code |
 
 ---
 
